@@ -1,0 +1,65 @@
+package com.liuwu.controller;
+
+import com.google.gson.Gson;
+import com.liuwu.biz.UserService;
+import com.liuwu.config.MyConfig;
+import com.liuwu.entity.Page;
+import com.liuwu.entity.User;
+import com.liuwu.util.CacheUtil;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
+
+/**
+ * @Description: 用户控制类
+ * @User: liuwu_eva@163.com
+ * @Date: 2017-05-03 下午 3:09
+ */
+@RestController
+@RequestMapping("/admin")
+public class UserController {
+    private static final Gson gson = new Gson();
+    private static final MyConfig config = MyConfig.getInstance();
+    private static CacheUtil cacheUtil = CacheUtil.getInstance();
+    @Resource
+    private UserService userService;
+
+    @Value("#{otherConfig[otherName]}")
+    private String userName;
+
+    @RequestMapping("/index")
+    private String index() {
+        return "hello world!";
+    }
+
+    @RequestMapping("/login")
+    private String login() {
+        return String.format("hello %s", config.getName());
+    }
+
+    @RequestMapping("/login2")
+    private String login2() {
+        return String.format("hello %s", userName);
+    }
+
+    @RequestMapping("/getUserInfo/{userId}")
+    private String getUserInfo(@PathVariable("userId") int userId) {
+        User user = userService.getUserById(userId);
+        cacheUtil.set("liuwu_user", gson.toJson(user)); //加入缓存
+        return gson.toJson(user);
+    }
+
+    @RequestMapping("/getUserInfos/{offset}")
+    private String getUserInfos(@PathVariable("offset") int offset) {
+        Page<User> page = new Page<>();
+        page.setLimit(2);
+        page.setOffset(offset);
+        Page<User> user = userService.getUserList(page);
+        return gson.toJson(user);
+    }
+
+
+}

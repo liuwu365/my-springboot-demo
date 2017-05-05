@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans default-lazy-init="false" xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+    <context:component-scan base-package="com.liuwu"/>
+    <context:annotation-config/>
+
+    <task:executor id="executor" pool-size="5"/>
+    <!-- scheduler的pool-size是ScheduledExecutorService线程池，默认为1 -->
+    <task:scheduler id="scheduler" pool-size="5"/>
+    <task:annotation-driven executor="executor" scheduler="scheduler"/>
+
+    <bean id="otherConfig" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="locations">
+            <list>
+                <value>classpath:my-config-other.properties</value>
+            </list>
+        </property>
+        <!-- 设置编码格式 -->
+        <property name="fileEncoding" value="UTF-8" />
+    </bean>
+
+    <!-- 配置初始化方法和销毁方法，但是如果要销毁方法生效scope="singleton"  和@PostConstruct类似
+    <bean id="clientMatchService" class="com.yuantai.ytgame.api.ClientMatchService" scope="singleton" lazy-init="false" init-method="init" destroy-method="destory"></bean>
+    -->
+
+
+</beans>
