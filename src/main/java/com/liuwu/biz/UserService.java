@@ -3,6 +3,8 @@ package com.liuwu.biz;
 import com.liuwu.entity.Page;
 import com.liuwu.entity.User;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2017/5/4 0004.
  */
@@ -20,4 +22,8 @@ public interface UserService {
      * @return
      */
     User getUserById(int userId);
+
+    List<User> getAllUsers();
+
+
 }

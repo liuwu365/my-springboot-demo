@@ -31,4 +31,6 @@ public interface UserMapper {
 
     int selectUserCountByPage(Map map);
 
+    List<User> selectAllUsers();
+
 }

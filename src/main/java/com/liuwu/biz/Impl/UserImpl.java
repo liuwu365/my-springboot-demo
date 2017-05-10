@@ -33,5 +33,10 @@ public class UserImpl implements UserService {
         return userMapper.selectByPrimaryKey(userId);
     }
 
+    @Override
+    public List<User> getAllUsers() {
+        return userMapper.selectAllUsers();
+    }
+
 
 }

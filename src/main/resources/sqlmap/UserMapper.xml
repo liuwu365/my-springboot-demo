@@ -29,6 +29,11 @@
         SELECT COUNT(*)
         FROM `user`
     </select>
+    <select id="selectAllUsers" resultType="com.liuwu.entity.User">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM `user`
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         DELETE FROM user
         WHERE id = #{id,jdbcType=INTEGER}
