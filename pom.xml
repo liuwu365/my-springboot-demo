@@ -145,6 +145,12 @@
             <version>2.3.1</version>
         </dependency>
 
+        <!-- RabbitMq自定义-->
+        <dependency>
+            <groupId>com.yuantai</groupId>
+            <artifactId>eventcenter</artifactId>
+            <version>1.0.8</version>
+        </dependency>
 
     </dependencies>
 
