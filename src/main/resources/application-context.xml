@@ -40,7 +40,7 @@
 
     <!-- 配置数据流作业-->
     <job:dataflow id="myDataFlowJob" class="com.liuwu.job.MyDataFlowJob" registry-center-ref="regCenter"
-                  sharding-total-count="2" cron="50 58 14 * * ?" streaming-process="true" overwrite="true" sharding-item-parameters="0=0,1=1"/>
+                  sharding-total-count="2" cron="25 35 17 * * ?" streaming-process="true" overwrite="true" sharding-item-parameters="0=0,1=1"/>
 
 
 </beans>

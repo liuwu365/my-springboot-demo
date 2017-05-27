@@ -33,9 +33,10 @@ public interface UserMapper {
 
     List<User> selectAllUsers();
 
-    //@Param("status") int status, @Param("id") long id, @Param("shardingTotalCount") int shardingTotalCount, @Param("shardingItem") int shardingItem
     List<User> selectUsersToJob(Page<User> page);
 
     int selectUsersCountToJob(Map map);
+
+    int updateBatch(List<User> userList);
 
 }

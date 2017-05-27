@@ -39,14 +39,13 @@
         SELECT
         <include refid="Base_Column_List"/>
         FROM `user`
-        WHERE `status`=${filter.status} and MOD (${filter.id}, ${filter.shardingTotalCount}) = ${filter.shardingItem}
+        WHERE `status`=${filter.status} and MOD (id, ${filter.shardingTotalCount}) = ${filter.shardingItem}
         limit #{offset}, #{limit}
     </select>
     <select id="selectUsersCountToJob" resultType="java.lang.Integer">
-        SELECT
-        COUNT(*)
+        SELECT COUNT(*)
         FROM `user`
-        WHERE `status`=${status} and MOD (${id}, ${shardingTotalCount}) = ${shardingItem}
+        WHERE `status` = ${status} AND MOD(id, ${shardingTotalCount}) = ${shardingItem}
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
@@ -150,5 +149,56 @@
             create_time = #{createTime,jdbcType=TIMESTAMP},
             remark      = #{remark,jdbcType=VARCHAR}
         WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateBatch" parameterType="list">
+        update user
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="name =case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.name!=null">
+                        when id=#{i.id} then #{i.name}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="age =case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.age!=null">
+                        when id=#{i.id} then #{i.age}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="sex =case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.sex!=null">
+                        when id=#{i.id} then #{i.sex}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="address =case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.address!=null">
+                        when id=#{i.id} then #{i.address}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="status =case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.status!=null">
+                        when id=#{i.id} then #{i.status}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="remark =case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.remark!=null">
+                        when id=#{i.id} then #{i.remark}
+                    </if>
+                </foreach>
+            </trim>
+        </trim>
+        where id in
+        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+            #{item.id,jdbcType=INTEGER}
+        </foreach>
     </update>
 </mapper>

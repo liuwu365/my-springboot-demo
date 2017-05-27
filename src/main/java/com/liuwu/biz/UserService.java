@@ -47,5 +47,11 @@ public interface UserService {
      */
     int updateUser(User user);
 
+    /**
+     * 批量更新用户
+     * @param userList
+     * @return
+     */
+    int updateBatch(List<User> userList);
 
 }

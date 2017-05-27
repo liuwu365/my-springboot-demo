@@ -1,0 +1,21 @@
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) DEFAULT '' COMMENT '姓名',
+  `age` int(3) DEFAULT '0' COMMENT '年龄',
+  `sex` tinyint(1) NOT NULL DEFAULT '1' COMMENT '性别(1.男 2.女)',
+  `address` varchar(200) DEFAULT '' COMMENT '地址',
+  `status` int(1) NOT NULL DEFAULT '0' COMMENT '状态(0.待处理 1.已处理)',
+  `create_time` timestamp NULL DEFAULT NULL COMMENT '创建时间',
+  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `remark` varchar(500) DEFAULT '' COMMENT '备注',
+  PRIMARY KEY (`id`),
+  KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8
+
+insert into `user` (`id`, `name`, `age`, `sex`, `address`, `status`, `create_time`, `update_time`, `remark`) values('1','rocking','23','1','测试','0','2017-05-10 15:40:29','2017-05-27 17:39:19','备注');
+insert into `user` (`id`, `name`, `age`, `sex`, `address`, `status`, `create_time`, `update_time`, `remark`) values('2','jack','23','1','测试','0','2017-05-10 15:40:33','2017-05-27 17:39:19','');
+insert into `user` (`id`, `name`, `age`, `sex`, `address`, `status`, `create_time`, `update_time`, `remark`) values('3','lili','35','2','测试','0','2017-05-10 15:40:31','2017-05-27 17:39:19','');
+insert into `user` (`id`, `name`, `age`, `sex`, `address`, `status`, `create_time`, `update_time`, `remark`) values('4','lucy','43','2','测试','0','2017-05-10 15:40:35','2017-05-27 17:39:19','');
+insert into `user` (`id`, `name`, `age`, `sex`, `address`, `status`, `create_time`, `update_time`, `remark`) values('5','mali','54','1','测试','0','2017-05-10 15:40:36','2017-05-27 17:39:19','');
+insert into `user` (`id`, `name`, `age`, `sex`, `address`, `status`, `create_time`, `update_time`, `remark`) values('6','liuwu','28','1','测试','0','2017-05-27 16:33:50','2017-05-27 17:39:19','');
+insert into `user` (`id`, `name`, `age`, `sex`, `address`, `status`, `create_time`, `update_time`, `remark`) values('7','liuxinyi','1','2','','0','2017-05-27 16:33:52','2017-05-27 17:39:19','');

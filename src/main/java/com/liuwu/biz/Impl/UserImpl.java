@@ -52,5 +52,10 @@ public class UserImpl implements UserService {
         return userMapper.updateByPrimaryKeySelective(user);
     }
 
+    @Override
+    public int updateBatch(List<User> userList) {
+        return userMapper.updateBatch(userList);
+    }
+
 
 }
