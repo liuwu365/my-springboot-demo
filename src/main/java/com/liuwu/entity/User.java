@@ -20,6 +20,8 @@ public class User implements Serializable {
     private int sex;
     @Excel(name = "地址")
     private String address;
+    @Excel(name = "状态")
+    private int status;
     @Excel(name = "创建时间", format = "yyyy-MM-dd HH:mm:ss",width = 30)
     private Date createTime;
     @Excel(name = "备注")

@@ -7,11 +7,12 @@
         <result column="age" property="age" jdbcType="INTEGER"/>
         <result column="sex" property="sex" jdbcType="BIT"/>
         <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
         <result column="remark" property="remark" jdbcType="VARCHAR"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, name, age, sex, address, create_time, remark
+        id, name, age, sex, address, status, create_time, remark
     </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
@@ -34,6 +35,20 @@
         <include refid="Base_Column_List"/>
         FROM `user`
     </select>
+    <select id="selectUsersToJob" resultType="com.liuwu.entity.User">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM `user`
+        WHERE `status`=${filter.status} and MOD (${filter.id}, ${filter.shardingTotalCount}) = ${filter.shardingItem}
+        limit #{offset}, #{limit}
+    </select>
+    <select id="selectUsersCountToJob" resultType="java.lang.Integer">
+        SELECT
+        COUNT(*)
+        FROM `user`
+        WHERE `status`=${status} and MOD (${id}, ${shardingTotalCount}) = ${shardingItem}
+    </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         DELETE FROM user
         WHERE id = #{id,jdbcType=INTEGER}
@@ -42,9 +57,9 @@
         <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into user (name, age, sex, address,create_time, remark)
+        insert into user (name, age, sex, address,status,create_time, remark)
         values (#{name,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, #{sex,jdbcType=BIT}, #{address,jdbcType=VARCHAR},
-        #{createTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR})
+        #{status,jdbcType=INTEGER},#{createTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR})
     </insert>
     <insert id="insertSelective" parameterType="com.liuwu.entity.User">
         <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
@@ -63,6 +78,9 @@
             </if>
             <if test="address != null">
                 address,
+            </if>
+            <if test="status != null">
+                status,
             </if>
             <if test="createTime != null">
                 create_time,
@@ -83,6 +101,9 @@
             </if>
             <if test="address != null">
                 #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
             </if>
             <if test="createTime != null">
                 #{createTime,jdbcType=TIMESTAMP},
@@ -107,6 +128,9 @@
             <if test="address != null">
                 address = #{address,jdbcType=VARCHAR},
             </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
             <if test="createTime != null">
                 create_time = #{createTime,jdbcType=TIMESTAMP},
             </if>
@@ -122,6 +146,7 @@
             age         = #{age,jdbcType=INTEGER},
             sex         = #{sex,jdbcType=BIT},
             address     = #{address,jdbcType=VARCHAR},
+            status      = #{status,jdbcType=INTEGER},
             create_time = #{createTime,jdbcType=TIMESTAMP},
             remark      = #{remark,jdbcType=VARCHAR}
         WHERE id = #{id,jdbcType=INTEGER}

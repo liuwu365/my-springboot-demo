@@ -29,6 +29,15 @@ public class UserImpl implements UserService {
     }
 
     @Override
+    public Page<User> selectUsersToJob(Page<User> page) {
+        List<User> userList = userMapper.selectUsersToJob(page);
+        int total = userMapper.selectUsersCountToJob(page.getFilter());
+        page.setTotal(total);
+        page.setResult(userList);
+        return page;
+    }
+
+    @Override
     public User getUserById(int userId) {
         return userMapper.selectByPrimaryKey(userId);
     }
@@ -36,6 +45,11 @@ public class UserImpl implements UserService {
     @Override
     public List<User> getAllUsers() {
         return userMapper.selectAllUsers();
+    }
+
+    @Override
+    public int updateUser(User user) {
+        return userMapper.updateByPrimaryKeySelective(user);
     }
 
 

@@ -6,12 +6,16 @@ import com.liuwu.config.MyConfig;
 import com.liuwu.entity.Page;
 import com.liuwu.entity.User;
 import com.liuwu.util.CacheUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @Description: 用户控制类
@@ -22,6 +26,7 @@ import javax.annotation.Resource;
 @RequestMapping("/admin")
 public class UserController {
     private static final Gson gson = new Gson();
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
     private static final MyConfig config = MyConfig.getInstance();
     private static CacheUtil cacheUtil = CacheUtil.getInstance();
     @Resource
@@ -60,6 +65,24 @@ public class UserController {
         Page<User> user = userService.getUserList(page);
         return gson.toJson(user);
     }
+
+    @RequestMapping("/getUserInfos")
+    private String getUserInfos() {
+        Map filter = new HashMap();
+        filter.put("status", 0);
+        filter.put("id", 1);
+        filter.put("shardingTotalCount", 2);
+        filter.put("shardingItem", 1);
+        Page<User> page = new Page<>();
+        page.setLimit(30);
+        page.setOffset(0);
+        page.setFilter(filter);
+        Page<User> userPage = userService.selectUsersToJob(page);
+        logger.info("用户：{}", gson.toJson(userPage.getResult()));
+        return gson.toJson(userPage);
+    }
+
+
 
 
 }

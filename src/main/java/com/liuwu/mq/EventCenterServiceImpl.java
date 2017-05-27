@@ -9,8 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
-
 /**
  * Created by liuyuanzhou on 5/10/16.
  */
@@ -25,7 +23,7 @@ public class EventCenterServiceImpl implements EventCenterService {
 
     private EventSender eventSenderHigh;
 
-    @PostConstruct
+    //@PostConstruct    启动mq
     public void init() throws ConfigurationException {
         Configuration configuration = new PropertiesConfiguration("mq.properties");
         String[] addrs = configuration.getString("hosts").split(";");

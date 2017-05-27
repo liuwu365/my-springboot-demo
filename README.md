@@ -6,7 +6,8 @@ springboot + mybatis搭建的项目   <br/>
     git地址:<a href="https://git.oschina.net/tywo45/t-io" target="_blank">https://git.oschina.net/tywo45/t-io</a>  <br/>
 3.添加EasyPoi(作为Excel的导入导出功能) <br/>
     git地址：<a href="https://git.oschina.net/SJRSB/easypoi" target="_blank">https://git.oschina.net/SJRSB/easypoi</a> <br/>
-4.添加RabbitMQ消息队列  
+4.添加RabbitMQ消息队列
+5.添加elastic-job分布式定时任务  
     
     
     

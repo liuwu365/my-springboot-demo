@@ -5,7 +5,8 @@
        xmlns:task="http://www.springframework.org/schema/task"
        xsi:schemaLocation="http://www.springframework.org/schema/beans	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.dangdang.com/schema/ddframe/job http://www.dangdang.com/schema/ddframe/job/job.xsd http://www.dangdang.com/schema/ddframe/reg http://www.dangdang.com/schema/ddframe/reg/reg.xsd"
+       xmlns:job="http://www.dangdang.com/schema/ddframe/job" xmlns:reg="http://www.dangdang.com/schema/ddframe/reg">
 
     <context:component-scan base-package="com.liuwu"/>
     <context:annotation-config/>
@@ -21,13 +22,25 @@
                 <value>classpath:my-config-other.properties</value>
             </list>
         </property>
-        <!-- 设置编码格式 -->
-        <property name="fileEncoding" value="UTF-8" />
+        <property name="fileEncoding" value="UTF-8"/>
     </bean>
 
     <!-- 配置初始化方法和销毁方法，但是如果要销毁方法生效scope="singleton"  和@PostConstruct类似
     <bean id="clientMatchService" class="com.yuantai.ytgame.api.ClientMatchService" scope="singleton" lazy-init="false" init-method="init" destroy-method="destory"></bean>
     -->
+
+
+    <!--配置作业注册中心 -->
+    <reg:zookeeper id="regCenter" server-lists="192.168.1.138:2181" namespace="dd-job"
+                   base-sleep-time-milliseconds="1000" max-sleep-time-milliseconds="3000" max-retries="3"/>
+
+    <!-- 配置作业-->
+    <job:simple id="mySimpleJob" class="com.liuwu.job.MySimpleJob" registry-center-ref="regCenter"
+                sharding-total-count="2" cron="0 0 10 * * ?" overwrite="true" sharding-item-parameters="0=A,1=B"/>
+
+    <!-- 配置数据流作业-->
+    <job:dataflow id="myDataFlowJob" class="com.liuwu.job.MyDataFlowJob" registry-center-ref="regCenter"
+                  sharding-total-count="2" cron="50 58 14 * * ?" streaming-process="true" overwrite="true" sharding-item-parameters="0=0,1=1"/>
 
 
 </beans>
