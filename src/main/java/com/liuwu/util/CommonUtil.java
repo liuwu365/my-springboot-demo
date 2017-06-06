@@ -1,302 +1,117 @@
 package com.liuwu.util;
 
-import com.google.gson.Gson;
-import com.xiaoleilu.hutool.date.DateUtil;
-import org.apache.commons.lang.StringUtils;
-import org.apache.poi.ss.formula.functions.T;
-
 import java.io.File;
-import java.lang.reflect.Field;
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
 /**
- * Created by liuyuanzhou on 7/14/16.
+ * @author liuwu
+ * 公用工具类【new偏功能性】
  */
 public class CommonUtil {
-    static String regEx = "[\u4e00-\u9fa5]";
-    static Pattern pat = Pattern.compile(regEx);
 
-    static final Gson gson = new Gson();
-
-    /**
-     * 手机号码验证
-     *
-     * @param content
-     * @return
+	 /**
+     * 验证ip是否合法
      */
-    public static boolean isMobileNum(String content) {
-        String str = "^[1][3,5,7,8][0-9]{9}$";
-        Pattern p = Pattern.compile(str);
-        Matcher m = p.matcher(content);
-        return m.matches();
-    }
-
-    /**
-     * 身份证号码验证
-     *
-     * @param content
-     * @return
-     */
-    public static boolean isIdCardNum(String content) {
-        String rgx = "^\\d{15}|^\\d{17}([0-9]|X|x)$";
-        Pattern p = Pattern.compile(rgx);
-        Matcher m = p.matcher(content);
-        return m.matches();
-    }
-
-
-    /**
-     * 邮箱验证
-     *
-     * @param email
-     * @return
-     */
-    public static boolean isEmail(String email) {
-        String reg = "[\\w]+@[\\w]+.[\\w]+";
-        Pattern p = Pattern.compile(reg);
-        Matcher m = p.matcher(email);
-        return m.matches();
-    }
-
-    /**
-     * 对汉字的长度进行验证等yes 的时候满足输入的要求
-     *
-     * @param kanji 汉字的类容
-     * @param count 需要验证的长度
-     * @return
-     */
-    public static String handleLeng(String kanji, int count) {
-        String regEx = "[\u4e00-\u9fa5]";
-        Pattern p = Pattern.compile(regEx);
-        int num = 0;//汉字长度
-        for (int i = 0; i < kanji.length(); i++) {
-            if (p.matches(regEx, kanji.substring(i, i + 1))) {
-                num++;
-            }
-        }
-        if (num > count) {
-            return "king-size";
-        }
-        if (num < 0) {
-            return "not-null";
-        }
-        return "yes";
-    }
-
-    /**
-     * 性别的验证
-     */
-    public static boolean handleSex(String Sex) {
-        String reg = "^[\\u7537\\u5973]+$";
-        Pattern p = Pattern.compile(reg);
-        Matcher m = p.matcher(Sex);
-        return m.matches();
-    }
-
-    /**
-     * 实体类转成MAP
-     */
-    public static Map<String, Object> ConvertObjToMap(Object obj) {
-        Map<String, Object> reMap = new HashMap<String, Object>();
-        if (obj == null) {
-            return null;
-        }
-
-        Field[] fields = obj.getClass().getDeclaredFields();
-        try {
-            for (int i = 0; i < fields.length; i++) {
-                try {
-                    Field f = obj.getClass().getDeclaredField(fields[i].getName());
-                    f.setAccessible(true);
-                    Object o = f.get(obj);
-                    if (o != null && !o.equals("")) {
-                        reMap.put(fields[i].getName(), o);
-                    }
-                } catch (NoSuchFieldException e) {
-                    e.printStackTrace();
-                } catch (IllegalArgumentException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-            }
-        } catch (SecurityException e) {
-            e.printStackTrace();
-        }
-        return reMap;
-    }
-
-    /**
-     * @param str
-     * @return true 包含中文字符
-     */
-    public static boolean isContainsChinese(String str) {
-        Matcher matcher = pat.matcher(str);
-        boolean flg = false;
-        if (matcher.find()) {
-            flg = true;
-        }
-        return flg;
-    }
-
-    /**
-     * 在指定路径下生成当天文件夹
-     *
-     * @return 返回文件夹名称
-     */
-    public static String createFile(String pjoPath) {
-        String nowFileName = DateUtil.format(new Date(), "yyyyMMdd");//DateUtil.nowTimeDate("yyyyMMdd");//文件夹名称
-        File file = new File(pjoPath + "/" + nowFileName);
-        if (!file.exists()) {
-            file.mkdir();
-        }
-        return nowFileName;
-    }
-
-    /**
-     * 判断单词是否是大写
-     *
-     * @param str
-     * @return
-     */
-    public static boolean isUpperCase(String str) {
-        boolean isInSmallCase = false;
-        for (int i = 0; i < str.length(); i++) {
-            char c = str.charAt(i);
-            if (Character.isUpperCase(c)) {
-                isInSmallCase = true;
-                break;
-            }
-        }
-        return isInSmallCase;
-    }
-
-    /**
-     * 判断一组以逗号分割的字符串中是否存在某个元素
-     *
-     * @param strS
-     * @param ele
-     * @return
-     */
-    public static boolean isContainsEleByStr(String strS, String ele) {
-        String[] values = strS.split(",");
-        List<String> list = Arrays.asList(values);
-        if (list.contains(ele)) {
+    public static boolean ipCheck(String text) {
+        String regex = "^(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|[1-9])\\."
+                + "(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|\\d)\\."
+                + "(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|\\d)\\."
+                + "(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|\\d)$";
+        if (text.matches(regex)) {
             return true;
         } else {
             return false;
         }
     }
 
-    /**
-     * 移除一组以逗号分割的字符串中某个元素
-     *
-     * @param str       以逗号分割的字符串
-     * @param removeEle 要移除的字符串
-     * @return
-     */
-    public static String removeEleByStr(String str, String removeEle) {
-        String result;
-        if (str == null || str.equals("")) {
-            return "";
-        }
-        List list = new ArrayList<>();
-        String[] array = str.split(",");
-        for (String a : array) {
-            if (!removeEle.equals(a)) {
-                list.add(a);
-            }
-        }
-        result = StringUtils.join(list.toArray(), ",");
-        return result;
-    }
+	/**
+	 * 方向解析
+	 * 正北：0，正东：9，正南：18，正西：27，分辨率为10°,如：值为3，则表示北偏东30，若：值则为11，则表示东偏南20°
+	 * @param value
+	 * @return
+	 */
+	public static String fangxinagMethod(int value) {
+		String str = "";
+		if (value > 30) {
+			str = "未知";
+			return str;
+		}
+		if (value == 0) {
+			str = "正北";
+		} else if (value == 9) {
+			str = "正东";
+		} else if (value == 18) {
+			str = "正南";
+		} else if (value == 27) {
+			str = "正西";
+		}
+		if (value > 0 && value < 9) {
+			str = "北偏东" + value * 10 + "°";
+		} else if (value > 9 && value < 18) {
+			str = "东偏南" + (9 + value) + "°";
+		} else if (value > 18 && value < 27) {
+			str = "南偏西" + (18 + value) + "°";
+		}
+		return str;
+	}
 
-    /**
-     * 数字转中文
-     *
-     * @param number
-     * @return
-     */
-    public static String numToHanStr(Integer number) {
-        String result = "";
-        String[] hanArr = {"零", "一", "二", "三", "四", "五", "六", "七", "八", "九"};
-        String[] unitArr = {"十", "百", "千", "万", "十", "白", "千", "亿", "十", "百", "千"};
-        String numStr = number + "";
-        int numLen = numStr.length();
-        for (int i = 0; i < numLen; i++) {
-            int num = numStr.charAt(i) - 48;
-            if (i != numLen - 1 && num != 0) {
-                result += hanArr[num] + unitArr[numLen - 2 - i];
-                if (number >= 10 && number < 20) {
-                    result = result.substring(1);
-                }
-            } else {
-                if (!(number >= 10 && number % 10 == 0)) {
-                    result += hanArr[num];
-                }
-            }
-        }
-        return result;
-    }
-
-    /**
-     * 求2个集合的补集
-     *
-     * @param U
-     * @param S
-     * @return
-     */
-    public static List buji(List U, List S) {
-        U.removeAll(S);
-        return U;
-    }
-
-    /**
-     * List集合移除指定元素[equals]
-     *
-     * @param list
-     * @param obj
-     */
-    public void iteratorRemove(List<T> list, T obj) {
-        Iterator<T> it = list.iterator();
-        while (it.hasNext()) {
-            T item = it.next();
-            if (item.equals(obj)) {
-                it.remove();
-            }
-        }
-    }
-
-    /**
-     * Map集合移除包含元素[contains]
-     *
-     * @param map
-     * @param ele
-     */
-    public static void iteratorRemove(Map<String, ?> map, String ele) {
-        Iterator<? extends Map.Entry<String, ?>> it = map.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry<String, ?> entry = it.next();
-            if (entry.getKey().startsWith(ele)) {
-                it.remove();
-            }
-        }
-    }
-
-    public static void main(String[] args) {
-        //System.out.println(removeEleByStr("160,95,94,23,58", "160"));
-        //System.out.println(isContainsEleByStr("1", "1"));
-        //System.out.println(numToHanStr(16));
-
-        Map map = new HashMap<>();
-        map.put("aa_1", true);
-        map.put("aa_2", true);
-        map.put("bb_3", true);
-        map.put("bb_4", true);
-        iteratorRemove(map, "aa_");
-
-        System.out.println(gson.toJson(map));
-    }
+	/**
+	 * 在指定路径下生成当天文件夹
+	 * @return 返回文件夹名称
+	 */
+	public static String createFile(String pjoPath) {
+		String nowFileName = DateUtil.nowTimeDate("yyyyMMdd");// 文件夹名称
+		File file = new File(pjoPath + "/" + nowFileName);
+		if (!file.exists()) {
+			file.mkdir();
+		}
+		return nowFileName;
+	}
+	
+	//遍历输出指定目录下的所有目录与文件名
+	public static void fileList(String path) {
+		File file = new File(path);
+		File[] files = file.listFiles();
+		if (files != null) {
+			for (File f1 : files) {
+				if (f1.isDirectory()) { //如果是目录
+					System.out.println(f1.getName()+"目录");
+					
+				}else {
+					System.out.println(f1.getName()); //获得当前文件或文件夹的名称
+				}
+			}
+		}
+	}
+	
+	/**
+	 * 将字节转换为kb
+	 */
+	public static long getKB(long B) {
+		if (B / 1024 < 1 && B % 1024 > 0) {
+			return 1;
+		}else{
+			return B / 1024 ;
+		} 
+	}
+	
+	/**
+	 * 读取properties文件信息
+	 * c:传入当前调用该方法的类名
+	 */
+	@SuppressWarnings("unchecked")
+	public static Properties getProperties(Class c) {
+		Properties prop = new Properties();
+		InputStream in = c.getResourceAsStream("/config.properties");
+		try {
+			prop.load(in);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return prop;
+	}
+	
+	    
 }

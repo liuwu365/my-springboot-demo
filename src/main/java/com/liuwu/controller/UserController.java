@@ -1,19 +1,25 @@
 package com.liuwu.controller;
 
 import com.google.gson.Gson;
+import com.liuwu.Helper.CommonHelper;
 import com.liuwu.biz.UserService;
 import com.liuwu.config.MyConfig;
+import com.liuwu.constant.Constant;
 import com.liuwu.entity.Page;
+import com.liuwu.entity.Result;
 import com.liuwu.entity.User;
-import com.liuwu.util.CacheUtil;
+import com.liuwu.util.*;
+import com.xiaoleilu.hutool.util.NetUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,10 +56,16 @@ public class UserController {
         return String.format("hello %s", userName);
     }
 
+
     @RequestMapping("/getUserInfo/{userId}")
-    private String getUserInfo(@PathVariable("userId") int userId) {
+    private String getUserInfo(@PathVariable("userId") int userId, HttpServletRequest request) {
+        //方法请求的频率检测
+        Result tip = CommonHelper.checkHz(userId, request);
+        if (tip.getCode() != 200) {
+            return tip.getMsg();
+        }
         User user = userService.getUserById(userId);
-        cacheUtil.set("liuwu_user", gson.toJson(user)); //加入缓存
+        cacheUtil.set("liuwu_user", gson.toJson(user), 24 * 60 * 60); //加入缓存
         return gson.toJson(user);
     }
 
@@ -81,8 +93,6 @@ public class UserController {
         logger.info("用户：{}", gson.toJson(userPage.getResult()));
         return gson.toJson(userPage);
     }
-
-
 
 
 }

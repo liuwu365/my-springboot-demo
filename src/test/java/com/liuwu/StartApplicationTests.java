@@ -1,12 +1,11 @@
 package com.liuwu;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import com.google.gson.Gson;
 import com.liuwu.biz.UserService;
-import com.liuwu.entity.Message;
 import com.liuwu.entity.User;
 import com.liuwu.mq.MQReceive;
 import com.liuwu.mq.MQSend;
-import com.liuwu.mq.MqMessage;
 import com.liuwu.notify.NotifyUserInfo;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.jeecgframework.poi.excel.ExcelExportUtil;
@@ -20,10 +19,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.io.FileOutputStream;
 import java.io.OutputStream;
-import java.util.IllegalFormatException;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 //@SpringBootTest(classes = StartApplication.class)
@@ -39,7 +39,11 @@ public class StartApplicationTests {
     private MQReceive mqReceive;
     @Autowired
     private UserService userService;
-
+    private ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor(r -> {
+        Thread t = new Thread(r);
+        t.setName("Processor");
+        return t;
+    });
 
     @Test
     public void excelTest() {
@@ -74,8 +78,6 @@ public class StartApplicationTests {
         }
 
     }
-
-
 
 
 }
