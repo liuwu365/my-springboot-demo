@@ -9,7 +9,7 @@ springboot + mybatis搭建的项目   <br/>
 4.添加RabbitMQ消息队列
 5.添加elastic-job分布式定时任务  
 6.添加接口频率检测(RateLimiter)    
-    
+7.添加ElasticSearch全文搜索引擎   
     
     
     
