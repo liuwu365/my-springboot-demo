@@ -1,6 +1,5 @@
-package com.liuwu.notify;
+package com.liuwu.entity;
 
-import com.liuwu.entity.User;
 import lombok.Data;
 import lombok.experimental.Accessors;
 

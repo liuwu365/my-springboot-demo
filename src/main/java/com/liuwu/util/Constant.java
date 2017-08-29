@@ -1,4 +1,4 @@
-package com.liuwu.constant;
+package com.liuwu.util;
 
 /**
  * @Description: 公共静态变量

@@ -1,7 +1,7 @@
 package com.liuwu.Helper;
 
 import com.google.gson.Gson;
-import com.liuwu.constant.Constant;
+import com.liuwu.util.Constant;
 import com.liuwu.entity.Result;
 import com.liuwu.util.CacheUtil;
 import com.liuwu.util.CheckUtil;

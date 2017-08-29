@@ -1,12 +1,11 @@
 package com.liuwu;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
 import com.google.gson.Gson;
 import com.liuwu.biz.UserService;
 import com.liuwu.entity.User;
 import com.liuwu.mq.MQReceive;
 import com.liuwu.mq.MQSend;
-import com.liuwu.notify.NotifyUserInfo;
+import com.liuwu.entity.NotifyUserInfo;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.jeecgframework.poi.excel.ExcelExportUtil;
 import org.jeecgframework.poi.excel.entity.ExportParams;
@@ -19,11 +18,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.io.FileOutputStream;
 import java.io.OutputStream;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 //@SpringBootTest(classes = StartApplication.class)
