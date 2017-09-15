@@ -1,8 +1,8 @@
 package com.liuwu.util;
 
 import com.liuwu.entity.Excel.Row;
-import com.liuwu.entity.Student;
 import com.liuwu.entity.Excel.Worksheet;
+import com.liuwu.entity.Student;
 import org.antlr.stringtemplate.StringTemplate;
 import org.antlr.stringtemplate.StringTemplateGroup;
 
@@ -19,6 +19,7 @@ import java.util.List;
  * @Description: 大批量Excel导出工具类(百万级别)
  * @User: liuwu_eva@163.com
  * @Date: 2017-09-11 16:54
+ * @see : http://blog.csdn.net/z69183787/article/details/50737709
  */
 public class ExcelStUtil {
     public static void export(OutputStream outputStream, List target) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
@@ -119,21 +120,21 @@ public class ExcelStUtil {
         //System.out.println(ExcelStUtil.class.getResource("").getPath());
         //System.out.println(ExcelStUtil.class.getClassLoader().getResource("").getPath());
         List<Student> result = new ArrayList<>();
-        List<String> hobbys = new ArrayList<String>(){
+        List<String> hobbys = new ArrayList<String>() {
             {
                 add("上网");
                 add("编码");
             }
         };
         for (int i = 0; i < 100; i++) {
-            result.add(new Student("liuwu-" + String.valueOf(i),28,hobbys));
+            result.add(new Student("liuwu-" + String.valueOf(i), 28, hobbys));
         }
         //OutputStream outputStream = new FileOutputStream("D:/output2.xls");
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         ExcelStUtil.export(byteArrayOutputStream, result);
         //ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
         //解决可能发生的中文乱码
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArrayOutputStream.toString().getBytes("UTF-8"));
+        //ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArrayOutputStream.toString().getBytes("UTF-8"));
 
         File file = new File("E:/output2.xls");
         OutputStream output = new FileOutputStream(file);
