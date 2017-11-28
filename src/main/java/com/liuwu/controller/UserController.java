@@ -2,7 +2,7 @@ package com.liuwu.controller;
 
 import com.google.gson.Gson;
 import com.liuwu.Helper.CommonHelper;
-import com.liuwu.biz.UserService;
+import com.liuwu.service.UserService;
 import com.liuwu.config.MyConfig;
 import com.liuwu.entity.Page;
 import com.liuwu.entity.Result;

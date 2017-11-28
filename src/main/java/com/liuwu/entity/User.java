@@ -1,14 +1,12 @@
 package com.liuwu.entity;
 
 import lombok.Data;
-import lombok.experimental.Accessors;
 import org.jeecgframework.poi.excel.annotation.Excel;
 
 import java.io.Serializable;
 import java.util.Date;
 
 @Data
-@Accessors(chain = true)
 public class User implements Serializable {
     @Excel(name = "ID")
     private int id;

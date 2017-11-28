@@ -10,7 +10,7 @@ import java.io.StringWriter;
 public class ErrorWriterUtil {
 
     /**输出堆栈信息到日志*/
-    public static StringWriter WriteError(Exception e) {
+    public static StringWriter writeError(Exception e) {
         StringWriter sw = null;
         PrintWriter pw = null;
         try {

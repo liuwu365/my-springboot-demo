@@ -86,7 +86,7 @@ public class CacheUtil {
             jedis = jedisPool.getResource();
             result = jedis.get(key);
         } catch (Exception e) {
-            logger.error("get value from redis error|key={}|ex={}", key, ErrorWriterUtil.WriteError(e).toString());
+            logger.error("get value from redis error|key={}|ex={}", key, ErrorWriterUtil.writeError(e).toString());
         } finally {
             if (jedis != null) {
                 jedisPool.returnResource(jedis);
@@ -124,7 +124,7 @@ public class CacheUtil {
                 jedis.setex(key, expiry, value);
             }
         } catch (Exception e) {
-            logger.error("set value to redis error|key={}|value={}|expiry={}|ex={}", key, value, expiry, ErrorWriterUtil.WriteError(e).toString());
+            logger.error("set value to redis error|key={}|value={}|expiry={}|ex={}", key, value, expiry, ErrorWriterUtil.writeError(e).toString());
         } finally {
             if (jedis != null) {
                 jedisPool.returnResource(jedis);
@@ -154,7 +154,7 @@ public class CacheUtil {
             }
             return true;
         } catch (Exception e) {
-            logger.error("set value to redis error key={}|value={}|expiry={}|ex={}", key, value, expiry, ErrorWriterUtil.WriteError(e));
+            logger.error("set value to redis error key={}|value={}|expiry={}|ex={}", key, value, expiry, ErrorWriterUtil.writeError(e));
             return false;
         } finally {
             if (jedis != null) {
@@ -172,7 +172,7 @@ public class CacheUtil {
             jedis = jedisPool.getResource();
             result = jedis.get(key);
         } catch (Exception e) {
-            logger.error("get redis error key={}|ex={}", key, ErrorWriterUtil.WriteError(e));
+            logger.error("get redis error key={}|ex={}", key, ErrorWriterUtil.writeError(e));
         } finally {
             if (jedis != null) {
                 jedisPool.returnResource(jedis);
@@ -208,7 +208,7 @@ public class CacheUtil {
             jedis.sadd(key, member);
             return true;
         } catch (Exception e) {
-            logger.error("sadd value to redis error key={}|member={}|ex={}", key, member, ErrorWriterUtil.WriteError(e));
+            logger.error("sadd value to redis error key={}|member={}|ex={}", key, member, ErrorWriterUtil.writeError(e));
             return false;
         } finally {
             if (jedis != null) {
@@ -226,7 +226,7 @@ public class CacheUtil {
             jedis = jedisPool.getResource();
             result = jedis.smembers(key);
         } catch (Exception e) {
-            logger.error("getsadd redis error key={}|ex={}", key, ErrorWriterUtil.WriteError(e));
+            logger.error("getsadd redis error key={}|ex={}", key, ErrorWriterUtil.writeError(e));
         } finally {
             if (jedis != null) {
                 jedisPool.returnResource(jedis);
@@ -244,7 +244,7 @@ public class CacheUtil {
             jedis.sadd(key, member);
             return true;
         } catch (Exception e) {
-            logger.error("sadd redis error key={}|member={}|ex={}", key, member, ErrorWriterUtil.WriteError(e));
+            logger.error("sadd redis error key={}|member={}|ex={}", key, member, ErrorWriterUtil.writeError(e));
             return false;
         } finally {
             if (jedis != null) {
@@ -262,7 +262,7 @@ public class CacheUtil {
             jedis = jedisPool.getResource();
             result = jedis.smembers(key);
         } catch (Exception e) {
-            logger.error("getsadd redis error key={}|ex={}", key, ErrorWriterUtil.WriteError(e));
+            logger.error("getsadd redis error key={}|ex={}", key, ErrorWriterUtil.writeError(e));
         } finally {
             if (jedis != null) {
                 jedisPool.returnResource(jedis);
@@ -305,7 +305,7 @@ public class CacheUtil {
             jedis.hset(key, field, value);
             result = true;
         } catch (Exception e) {
-            logger.error("hset redis error key={}|field={}|value={}|ex={}", key, field, value, ErrorWriterUtil.WriteError(e));
+            logger.error("hset redis error key={}|field={}|value={}|ex={}", key, field, value, ErrorWriterUtil.writeError(e));
         } finally {
             if (jedis != null) {
                 jedisPool.returnResource(jedis);
@@ -323,7 +323,7 @@ public class CacheUtil {
             jedis = jedisPool.getResource();
             result = jedis.hget(key, field);
         } catch (Exception e) {
-            logger.error("hget redis error key={}|field={}|ex={}", key, field, ErrorWriterUtil.WriteError(e));
+            logger.error("hget redis error key={}|field={}|ex={}", key, field, ErrorWriterUtil.writeError(e));
         } finally {
             if (jedis != null) {
                 jedisPool.returnResource(jedis);
@@ -341,7 +341,7 @@ public class CacheUtil {
             jedis = jedisPool.getResource();
             result = jedis.hgetAll(key);
         } catch (Exception e) {
-            logger.error("hgetAll redis error key={}|ex={}", key, ErrorWriterUtil.WriteError(e));
+            logger.error("hgetAll redis error key={}|ex={}", key, ErrorWriterUtil.writeError(e));
         } finally {
             if (jedis != null) {
                 jedisPool.returnResource(jedis);
@@ -359,7 +359,7 @@ public class CacheUtil {
             jedis.hdel(key, field);
             return true;
         } catch (Exception e) {
-            logger.error("hdel redis error key={}|field={}|ex={}", key, field, ErrorWriterUtil.WriteError(e));
+            logger.error("hdel redis error key={}|field={}|ex={}", key, field, ErrorWriterUtil.writeError(e));
             return false;
         } finally {
             if (jedis != null) {

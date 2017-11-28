@@ -11,6 +11,15 @@
     <context:component-scan base-package="com.liuwu"/>
     <context:annotation-config/>
 
+    <!-- 解决 HttpMediaTypeNotAcceptableException: Could not find acceptable representation -->
+    <bean id="jacksonMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+        <property name="supportedMediaTypes">
+            <list>
+                <value>text/html;charset=UTF-8</value>
+            </list>
+        </property>
+    </bean>
+
     <task:executor id="executor" pool-size="5"/>
     <!-- scheduler的pool-size是ScheduledExecutorService线程池，默认为1 -->
     <task:scheduler id="scheduler" pool-size="5"/>
@@ -30,17 +39,18 @@
     -->
 
 
-    <!--配置作业注册中心 -->
-    <reg:zookeeper id="regCenter" server-lists="192.168.1.138:2181" namespace="dd-job"
+    <!--配置作业注册中心
+    <reg:zookeeper id="regCenter" server-lists="192.168.1.106:2181" namespace="dd-job"
                    base-sleep-time-milliseconds="1000" max-sleep-time-milliseconds="3000" max-retries="3"/>
-
-    <!-- 配置作业-->
+    -->
+    <!-- 配置作业
     <job:simple id="mySimpleJob" class="com.liuwu.job.MySimpleJob" registry-center-ref="regCenter"
                 sharding-total-count="2" cron="0 0 10 * * ?" overwrite="true" sharding-item-parameters="0=A,1=B"/>
-
-    <!-- 配置数据流作业-->
+    -->
+    <!-- 配置数据流作业
     <job:dataflow id="myDataFlowJob" class="com.liuwu.job.MyDataFlowJob" registry-center-ref="regCenter"
                   sharding-total-count="2" cron="25 35 17 * * ?" streaming-process="true" overwrite="true" sharding-item-parameters="0=0,1=1"/>
+    -->
 
 
 </beans>

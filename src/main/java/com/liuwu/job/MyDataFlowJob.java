@@ -3,14 +3,13 @@ package com.liuwu.job;
 import com.dangdang.ddframe.job.api.ShardingContext;
 import com.dangdang.ddframe.job.api.dataflow.DataflowJob;
 import com.google.gson.Gson;
-import com.liuwu.biz.UserService;
+import com.liuwu.service.UserService;
 import com.liuwu.entity.Page;
 import com.liuwu.entity.User;
 import com.liuwu.enums.UserStatus;
 import com.xiaoleilu.hutool.date.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.tio.core.maintain.Users;
 
 import javax.annotation.Resource;
 import java.util.*;

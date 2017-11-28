@@ -90,7 +90,7 @@
     </tx:advice>
 
     <aop:config proxy-target-class="true">
-        <aop:advisor pointcut="execution( * com.liuwu.biz.Impl.*.*(..)))" advice-ref="txAdvice" />
+        <aop:advisor pointcut="execution( * com.liuwu.service.Impl.*.*(..)))" advice-ref="txAdvice" />
     </aop:config>
 
 </beans>
