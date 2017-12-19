@@ -10,6 +10,8 @@ springboot + mybatis搭建的项目   <br/>
 5.添加elastic-job分布式定时任务  
 6.添加接口频率检测(RateLimiter)    
 7.添加ElasticSearch全文搜索引擎   
+8.添加文件变动监听(使用commons-io包<a href="http://blog.csdn.net/u013673976/article/details/50414788" target="_blank">http://blog.csdn.net/u013673976/article/details/50414788</a>)    
+    
     
     
     
