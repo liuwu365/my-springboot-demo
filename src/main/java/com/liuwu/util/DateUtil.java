@@ -37,7 +37,8 @@ public class DateUtil {
 	}
 
 	/**
-	 * 将带T的数据转为yyyy-MM-dd H:mm:ss 
+	 * 将带T的数据转为yyyy-MM-dd H:mm:ss
+	 * http://blog.csdn.net/feelwing1314/article/details/11717383
 	 * @param utcTime
 	 * @return
 	 */
