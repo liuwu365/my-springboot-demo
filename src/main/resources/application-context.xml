@@ -31,7 +31,7 @@
 
 
     <!--配置作业注册中心 -->
-    <reg:zookeeper id="regCenter" server-lists="192.168.1.138:2181" namespace="dd-job"
+    <reg:zookeeper id="regCenter" server-lists="192.168.1.110:2181" namespace="dd-job"
                    base-sleep-time-milliseconds="1000" max-sleep-time-milliseconds="3000" max-retries="3"/>
 
     <!-- 配置作业-->

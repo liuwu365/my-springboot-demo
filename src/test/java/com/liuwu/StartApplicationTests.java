@@ -2,10 +2,8 @@ package com.liuwu;
 
 import com.google.gson.Gson;
 import com.liuwu.biz.UserService;
-import com.liuwu.entity.User;
-import com.liuwu.mq.MQReceive;
-import com.liuwu.mq.MQSend;
 import com.liuwu.entity.NotifyUserInfo;
+import com.liuwu.entity.User;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.jeecgframework.poi.excel.ExcelExportUtil;
 import org.jeecgframework.poi.excel.entity.ExportParams;
@@ -30,10 +28,10 @@ import java.util.concurrent.ScheduledExecutorService;
 })
 public class StartApplicationTests {
     private static final Gson gson = new Gson();
-    @Autowired
+    /*@Autowired
     private MQSend mqSend;
     @Autowired
-    private MQReceive mqReceive;
+    private MQReceive mqReceive;*/
     @Autowired
     private UserService userService;
     private ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor(r -> {
@@ -67,7 +65,7 @@ public class StartApplicationTests {
             User user = userService.getUserById(1);
             userInfo.setMsg("发消息了");
             userInfo.setUser(user);
-            mqSend.sendNotifyMessage(user, 1l);
+            //mqSend.sendNotifyMessage(user, 1l);
 
 
         } catch (Exception e) {
