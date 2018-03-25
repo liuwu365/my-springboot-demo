@@ -31,7 +31,7 @@ public class OhMyEmailTest {
     public void before() throws GeneralSecurityException {
         // 配置，一次即可
         OhMyEmail.config(SMTP_office365(false, "TLS"), fromEmail, fromEmailPwd);
-        //OhMyEmail.config(SMTP_gmail(false, "SSL"), "liuwu1189@gmail.com", "rocking123");
+        //OhMyEmail.config(SMTP_gmail(false, "SSL"), "liuwu1189@gmail.com", "rocking123ggg");
     }
 
     @Test
